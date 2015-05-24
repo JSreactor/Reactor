@@ -4,13 +4,19 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+//global.jQuery = require('jquery');
+//var bootstrap = require('bootstrap');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+//var bts = require('./node_modules/bootstrap/js/alert');
+var engine = require('ejs-locals');
 var app = express();
 
 // view engine setup
+// use ejs-locals for all ejs templates:
+app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -21,6 +27,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/metronic",express.static(path.join(__dirname, '/templates/metronic')));
+app.use("/bootstrap",express.static(path.join(__dirname, '/node_modules/bootstrap')));
 
 app.use('/', routes);
 app.use('/users', users);
